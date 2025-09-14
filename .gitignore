@@ -1,7 +1,22 @@
-.anchor
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.log
+
+# Virtual environment
+venv/
+.env/
+
+# FastAPI / cache
+*.pid
+*.db-journal
+
+# IDE / system files
+.vscode/
+.idea/
 .DS_Store
-target
-**/*.rs.bk
-node_modules
-test-ledger
-.yarn
+*.swp

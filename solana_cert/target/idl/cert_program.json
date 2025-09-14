@@ -1,0 +1,346 @@
+{
+  "address": "GAngKGB1TtogbjxV6nMac26mSS7EexguQmct1fQkLdUB",
+  "metadata": {
+    "name": "cert_program",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "issue_certificate",
+      "discriminator": [
+        61,
+        197,
+        55,
+        28,
+        159,
+        18,
+        132,
+        128
+      ],
+      "accounts": [
+        {
+          "name": "certificate_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  101,
+                  114,
+                  116,
+                  105,
+                  102,
+                  105,
+                  99,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "cert_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "issuer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "cert_id",
+          "type": "string"
+        },
+        {
+          "name": "data_hash",
+          "type": "string"
+        },
+        {
+          "name": "encrypted_cid",
+          "type": "string"
+        },
+        {
+          "name": "metadata_ipfs_cid",
+          "type": "string"
+        },
+        {
+          "name": "serial_number",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "revoke_certificate",
+      "discriminator": [
+        236,
+        5,
+        130,
+        119,
+        9,
+        164,
+        130,
+        122
+      ],
+      "accounts": [
+        {
+          "name": "certificate_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  101,
+                  114,
+                  116,
+                  105,
+                  102,
+                  105,
+                  99,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "_cert_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "issuer",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "_cert_id",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "verify_certificate",
+      "discriminator": [
+        85,
+        168,
+        68,
+        192,
+        185,
+        249,
+        46,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "certificate_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  101,
+                  114,
+                  116,
+                  105,
+                  102,
+                  105,
+                  99,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "_cert_id"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "_cert_id",
+          "type": "string"
+        },
+        {
+          "name": "data_hash",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Certificate",
+      "discriminator": [
+        202,
+        229,
+        222,
+        220,
+        116,
+        20,
+        74,
+        67
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "CertificateIssued",
+      "discriminator": [
+        62,
+        59,
+        26,
+        207,
+        181,
+        234,
+        201,
+        52
+      ]
+    },
+    {
+      "name": "CertificateRevoked",
+      "discriminator": [
+        99,
+        180,
+        224,
+        20,
+        200,
+        221,
+        133,
+        47
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UnauthorizedIssuer",
+      "msg": "You are not authorized to perform this action."
+    },
+    {
+      "code": 6001,
+      "name": "HashMismatch",
+      "msg": "The provided hash does not match the stored hash."
+    },
+    {
+      "code": 6002,
+      "name": "CertificateRevoked",
+      "msg": "This certificate has been revoked."
+    }
+  ],
+  "types": [
+    {
+      "name": "Certificate",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "cert_id",
+            "type": "string"
+          },
+          {
+            "name": "issuer",
+            "type": "pubkey"
+          },
+          {
+            "name": "data_hash",
+            "type": "string"
+          },
+          {
+            "name": "encrypted_cid",
+            "type": "string"
+          },
+          {
+            "name": "metadata_ipfs_cid",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "CertificateStatus"
+              }
+            }
+          },
+          {
+            "name": "issued_at",
+            "type": "i64"
+          },
+          {
+            "name": "serial_number",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CertificateIssued",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "cert_id",
+            "type": "string"
+          },
+          {
+            "name": "issuer",
+            "type": "pubkey"
+          },
+          {
+            "name": "serial_number",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CertificateRevoked",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "cert_id",
+            "type": "string"
+          },
+          {
+            "name": "issuer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CertificateStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Issued"
+          },
+          {
+            "name": "Revoked"
+          }
+        ]
+      }
+    }
+  ]
+}

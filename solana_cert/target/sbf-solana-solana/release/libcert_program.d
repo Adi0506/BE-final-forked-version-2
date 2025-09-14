@@ -1,0 +1,1 @@
+/home/arpit/certificate-verification-platform/solana_cert/target/sbf-solana-solana/release/libcert_program.rlib: /home/arpit/certificate-verification-platform/solana_cert/programs/cert-program/src/lib.rs
