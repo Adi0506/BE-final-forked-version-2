@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use anchor_lang::solana_program::clock::Clock;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
-declare_id!("6qZS7v9cEzK8bxUCdiLPCwr3GbWVuyE5w9N3oMNRrwFU");
+declare_id!("GAngKGB1TtogbjxV6nMac26mSS7EexguQmct1fQkLdUB");
 
 #[program]
 pub mod cert_program {

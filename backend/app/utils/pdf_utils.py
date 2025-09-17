@@ -1,19 +1,26 @@
-# pdf_utils.py
+# backend/app/utils/pdf_utils.py
+from PyPDF2 import PdfReader
 from io import BytesIO
-import PyPDF2
+from typing import Union
 
-def extract_metadata(file_bytes: bytes) -> dict:
+def extract_metadata(file_data: Union[bytes, BytesIO]) -> dict:
     """
-    Simple PDF metadata extractor.
-    Returns dictionary with title, author, number of pages, etc.
+    Accept bytes or BytesIO. Returns minimal metadata dict.
     """
-    reader = PyPDF2.PdfReader(BytesIO(file_bytes))
-    info = reader.metadata
-    metadata = {
-        "title": info.title if info.title else "",
-        "author": info.author if info.author else "",
-        "subject": info.subject if info.subject else "",
-        "producer": info.producer if info.producer else "",
-        "num_pages": len(reader.pages)
-    }
-    return metadata
+    if isinstance(file_data, (bytes, bytearray)):
+        stream = BytesIO(file_data)
+    else:
+        stream = file_data
+    reader = PdfReader(stream)
+    info = {}
+    # Try metadata (some PDF have metadata fields)
+    try:
+        meta = reader.metadata
+        info["title"] = getattr(meta, "title", "") or ""
+        info["author"] = getattr(meta, "author", "") or ""
+        info["subject"] = getattr(meta, "subject", "") or ""
+        info["producer"] = getattr(meta, "producer", "") or ""
+    except Exception:
+        info["title"] = info["author"] = info["subject"] = info["producer"] = ""
+    info["num_pages"] = len(reader.pages) if reader.pages is not None else 0
+    return info
